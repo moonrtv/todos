@@ -1,1 +1,161 @@
-.title,body{font-weight:200}.new-todo,.todo__list-edit,body{font-family:Helvetica,Arial,sans-serif}.todo__list-check,.todo__list-destroy,.todo__list-editing:before,.todo__list-title:before{height:40px;position:absolute}*{box-sizing:border-box}body{font-size:24px;line-height:26px;color:#4E342E;background:#EFEBE9;margin:0}.wrapper{width:520px;margin:0 auto}.header{text-align:center;padding-top:30px}.title{font-size:32px;font-style:italic;color:rgba(216,67,21,.3);line-height:55px}.list,.new-todo,.todo__list-edit{display:block;font-size:24px;font-weight:200;line-height:26px}.new-todo,.todo__list-edit{padding:15px 15px 15px 50px;width:100%;border:0;outline:0;box-shadow:0 1px 1px rgba(161,136,127,.3)}.list{font-style:normal;margin:0 auto}.todo__list{list-style:none;margin:0;padding:0}.todo__list li{position:relative;background-color:#fff;border-top:1px solid rgba(161,136,127,.3)}.todo__list-title{display:inline-block;padding:15px 15px 15px 50px;width:439px;overflow-wrap:break-word}.todo__list-title:before{content:'';left:1px;top:9px;width:40px;background:url(../image/uncheck.svg)}.todo__list-check{display:none;width:40px}.todo__list-check:checked+.todo__list-title:after{content:'';position:absolute;left:1px;top:9px;width:40px;height:40px;background:url(../image/check.svg)}.todo__list-check:checked+label{color:#D7CCC8;text-decoration:line-through;transition:color .2s}.todo__list-destroy{right:5px;top:14px;width:20px;color:rgba(191,54,12,.5)}.todo__list-destroy:before{content:'x'}.todo__list-destroy:hover{color:#bf360c;cursor:pointer}.todo__list-editing{position:absolute;right:56px;top:17px}.todo__list-editing:before{content:'';width:25px;background:url(../image/pen.png) no-repeat;background-size:22px;opacity:.5}.todo__list-editing:hover:before{opacity:1;cursor:pointer}.todo__list-edit{display:none;border:1px solid rgba(161,136,127,.3)}.js-editing>.todo__list-edit{display:block}.js-editing .todo__list-check,.js-editing .todo__list-destroy,.js-editing .todo__list-editing,.js-editing .todo__list-title{display:none}
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 24px;
+  font-weight: 200;
+  line-height: 26px;
+  color: #4E342E;
+  background: #EFEBE9;
+  margin: 0;
+}
+
+.wrapper {
+  width: 520px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  padding-top: 30px;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 200;
+  font-style: italic;
+  color: rgba(216, 67, 21, 0.3);
+  line-height: 55px;
+}
+
+.new-todo,
+.todo__list-edit {
+  display: block;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 24px;
+  font-weight: 200;
+  line-height: 26px;
+  padding: 15px 15px 15px 50px;
+  width: 100%;
+  border: 0;
+  outline: none;
+  box-shadow: 0 1px 1px rgba(161, 136, 127, 0.3);
+}
+
+.list {
+  display: block;
+  font-size: 24px;
+  font-weight: 200;
+  font-style: normal;
+  line-height: 26px;
+  margin: 0 auto;
+}
+
+.todo__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.todo__list li {
+  position: relative;
+  background-color: #ffffff;
+  border-top: 1px solid rgba(161, 136, 127, 0.3);
+}
+
+.todo__list-title {
+  display: inline-block;
+  padding: 15px 15px 15px 50px;
+  width: 439px;
+  overflow-wrap: break-word;
+}
+
+.todo__list-title:before {
+  content: '';
+  position: absolute;
+  left: 1px;
+  top: 9px;
+  width: 40px;
+  height: 40px;
+  background: url("../image/uncheck.svg");
+}
+
+.todo__list-check {
+  display: none;
+  position: absolute;
+  width: 40px;
+  height: 40px;
+}
+
+.todo__list-check:checked + .todo__list-title:after {
+  content: '';
+  position: absolute;
+  left: 1px;
+  top: 9px;
+  width: 40px;
+  height: 40px;
+  background: url("../image/check.svg");
+}
+
+.todo__list-check:checked + label {
+  color: #D7CCC8;
+  text-decoration: line-through;
+  transition: color 0.2s;
+}
+
+.todo__list-destroy {
+  position: absolute;
+  right: 5px;
+  top: 14px;
+  width: 20px;
+  height: 40px;
+  color: rgba(191, 54, 12, 0.5);
+}
+
+.todo__list-destroy:before {
+  content: 'x';
+}
+
+.todo__list-destroy:hover {
+  color: #bf360c;
+  cursor: pointer;
+}
+
+.todo__list-editing {
+  position: absolute;
+  right: 56px;
+  top: 17px;
+}
+
+.todo__list-editing:before {
+  content: '';
+  position: absolute;
+  width: 25px;
+  height: 40px;
+  background: url("../image/pen.png") no-repeat;
+  background-size: 22px;
+  opacity: 0.5;
+}
+
+.todo__list-editing:hover:before {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.todo__list-edit {
+  display: none;
+  border: 1px solid rgba(161, 136, 127, 0.3);
+}
+
+.js-editing > .todo__list-edit {
+  display: block;
+}
+
+.js-editing .todo__list-check,
+.js-editing .todo__list-title,
+.js-editing .todo__list-editing,
+.js-editing .todo__list-destroy {
+  display: none;
+}

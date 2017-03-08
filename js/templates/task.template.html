@@ -1,17 +1,11 @@
-<section class="list" id="listId">
-    <ul class="todo__list">
-        {{#each tasks}}
-        <li data-id="{{@index}}">
-            {{#if status}}
-            <input type="checkbox" class="todo__list-check" id="task{{@index}}" checked>
-            {{else}}
-            <input type="checkbox" class="todo__list-check" id="task{{@index}}">
-            {{/if}}
-            <label class="todo__list-title" for="task{{@index}}" title="">{{title}}</label>
-            <div class="todo__list-destroy"></div>
-            <div class="todo__list-editing"></div>
-            <input type="text" class="todo__list-edit">
-        </li>
-        {{/each}}
-    </ul>
-</section>
+<li>
+    {{#if status}}
+    <input type="checkbox" class="todo__list-check" id="{{id}}" checked>
+    {{else}}
+    <input type="checkbox" class="todo__list-check" id="{{id}}">
+    {{/if}}
+    <label class="todo__list-title" for="{{id}}" title="">{{title}}</label>
+    <div class="todo__list-destroy"></div>
+    <div class="todo__list-editing"></div>
+    <input type="text" class="todo__list-edit">
+</li>

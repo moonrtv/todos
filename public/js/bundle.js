@@ -1,8 +1,12 @@
+/**
+ * В модуле описаны обработчики на форме
+ */
 $(function() {
     var listTasks = new Tasks();
     var $enterTask = $('#enterTask');
     var todos = {};
 
+    // Проверка localStorage, если что отрисовываем прошлую сессию
     if (localStorage.getItem('todos')) {
         todos = JSON.parse(localStorage.getItem('todos'));
         todos.tasks.forEach(function(item) {
@@ -11,6 +15,9 @@ $(function() {
         listTasks.renderTasks(listTasks);
     }
 
+    /**
+     * Добавление нового task'a
+     */
     $enterTask.bind('keypress', function(event) {
         if (event.keyCode === 13 && this.value) {
 
@@ -21,6 +28,9 @@ $(function() {
         }
     });
 
+    /**
+     * События на поле task(удаление, смена статуса, редактирование)
+     */
     $('li').live('click', function(event) {
         var target = event.target,
             elementId = parseInt($(this).attr('data-id')),
@@ -51,6 +61,10 @@ $(function() {
         }
     });
 
+    /**
+     * Закрытие поля редактирования task'a
+     * @param {Object} task
+     */
     function closeEditField(task) {
         var self = this;
 
@@ -66,10 +80,17 @@ $(function() {
 
 });
 
+/**
+ * Модуль task
+ */
 (function() {
-    function Task(obj) {
+    function Task(obj, parent) {
         this.title = obj.title || 'New task';
         this.status = obj.status || false;
+        this.parent = parent;
+        this.id = Date.now();
+
+        this.render(obj);
     }
 
     Task.prototype.toggleStatus = function() {
@@ -84,15 +105,68 @@ $(function() {
         this.title = name;
     };
 
+    Task.prototype.render = function(item) {
+        this.$el = $(App.templates.task.template(item));
+        this.$editBtn = this.$el.find('.todo__list-editing');
+        this.$removeBtn = this.$el.find('.todo__list-destroy');
+
+        this.setEventListeners();
+    };
+
+    Task.prototype.setEventListeners = function () {
+        var self = this;
+
+        this.$removeBtn.click(function(event) {
+            var index = self.parent.tasks.indexOf(self);
+            self.parent.tasks.splice(index, 1);
+            self.$el.remove();
+        });
+
+        this.$editBtn.click(function(event) {
+            self.$el.addClass('js-editing');
+            self.$el.find('.todo__list-edit').val(self.getTitle());
+            closeEditField.call(self);
+        });
+    };
+
+    /**
+     * Закрытие поля редактирования task'a
+     * @param {Object} task
+     */
+    function closeEditField() {
+        var self = this;
+
+        $(document).bind('mouseup', function(event) {
+            if (self.$el.has(event.target).length === 0) {
+                $(document).unbind('mouseup');
+                self.setTitle(self.$el.find('.todo__list-edit').val());
+                self.$el.find('.todo__list-title')[0].textContent = self.getTitle();
+                self.$el.removeClass('js-editing');
+
+                //task.title = $(self).find('.todo__list-edit').val();
+
+                //listTasks.renderTasks(listTasks);
+            }
+        });
+    }
+
     window.Task = Task;
 })();
+/**
+ * Модуль коллекция task'ов
+ */
 (function() {
     function Tasks() {
         this.tasks = [];
+        this.$tasks = $('#todoListId');
     }
 
     Tasks.prototype.addTask = function(item) {
-        this.tasks.push(item);
+        //this.tasks.push(item);
+        var task = new Task(item, this);
+        this.tasks.push(task);
+        debugger
+        this.$tasks.append(task.$el);
     };
 
     Tasks.prototype.delTask = function(index) {
@@ -104,11 +178,11 @@ $(function() {
     };
 
     Tasks.prototype.renderTasks = function(items) {
-        $('#listId').remove();
-        items.tasks.sort(this.sortTasks);
-        localStorage.clear();
-        localStorage.setItem('todos', JSON.stringify(items));
-        $('#parentId').append(App.templates.task.template(items));
+        // $('#listId').remove();
+        // items.tasks.sort(this.sortTasks);
+        // localStorage.clear();
+        // localStorage.setItem('todos', JSON.stringify(items));
+         //$('#parentId').append(App.templates.task.template(items));
     };
 
     Tasks.prototype.sortTasks = function(str1, str2) {
@@ -128,6 +202,35 @@ $(function() {
         }
         return str1split.length - str2split.length;
     };
+
+
+    var listTasks = new Tasks();
+    //var $enterTask = $('#enterTask');
+
+    /**
+     * Добавление нового task'a
+     */
+    $('#enterTask').bind('keypress', function(event) {
+        if (event.keyCode === 13 && this.value) {
+
+            listTasks.addTask({title: this.value, status: false});
+            //listTasks.renderTasks(listTasks);
+
+            //this.$tasks.val('');
+        }
+    });
+
+    //var todos = {};
+
+    // Проверка localStorage, если что отрисовываем прошлую сессию
+    // if (localStorage.getItem('todos')) {
+    //     todos = JSON.parse(localStorage.getItem('todos'));
+    //     todos.tasks.forEach(function(item) {
+    //         listTasks.addTask(new Task({title: item.title, status: item.status}));
+    //     });
+    //     listTasks.renderTasks(listTasks);
+    // }
+
 
     window.Tasks = Tasks;
 })();

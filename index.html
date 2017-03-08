@@ -8,9 +8,9 @@
     <script src="lib/handlebars-min.js"></script>
     <script src="public/templates/templates.js"></script>
     <!--<script src="public/js/bundle-min.js"></script>-->
-    <script src="js/task.js"></script>
-    <script src="js/tasks.js"></script>
-    <script src="js/handler.js"></script>
+    <!--<script src="js/task.js"></script>-->
+    <!--<script src="js/tasks.js"></script>-->
+    <!--<script src="js/handler.js"></script>-->
 </head>
 <body>
 <div class="wrapper" id="parentId">
@@ -18,6 +18,12 @@
         <label class="title">My todos</label>
         <input type="text" class="new-todo" id="enterTask" placeholder="List tasks">
     </header>
+    <section class="list">
+        <ul class="todo__list" id="todoListId">
+        </ul>
+    </section>
 </div>
+<script src="js/task.js"></script>
+<script src="js/tasks.js"></script>
 </body>
 </html>

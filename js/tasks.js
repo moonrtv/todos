@@ -4,10 +4,13 @@
 (function() {
     function Tasks() {
         this.tasks = [];
+        this.$tasks = $('#todoListId');
     }
 
     Tasks.prototype.addTask = function(item) {
-        this.tasks.push(item);
+        var task = new Task(item, this);
+        this.tasks.push(task);
+        this.$tasks.append(task.$el);
     };
 
     Tasks.prototype.delTask = function(index) {
@@ -16,14 +19,6 @@
 
     Tasks.prototype.getTask = function(index) {
         return this.tasks[index];
-    };
-
-    Tasks.prototype.renderTasks = function(items) {
-        $('#listId').remove();
-        items.tasks.sort(this.sortTasks);
-        localStorage.clear();
-        localStorage.setItem('todos', JSON.stringify(items));
-        $('#parentId').append(App.templates.task.template(items));
     };
 
     Tasks.prototype.sortTasks = function(str1, str2) {
@@ -43,6 +38,19 @@
         }
         return str1split.length - str2split.length;
     };
+
+
+    var listTasks = new Tasks();
+
+    /**
+     * Добавление нового task'a
+     */
+    $('#enterTask').bind('keypress', function(event) {
+        if (event.keyCode === 13 && this.value) {
+            listTasks.addTask({title: this.value, status: false, id: Date.now()});
+            event.target.value = '';
+        }
+    });
 
     window.Tasks = Tasks;
 })();
